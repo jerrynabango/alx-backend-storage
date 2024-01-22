@@ -14,17 +14,17 @@ def log_stat() -> None:
     nginx_collection = client.logs.nginx
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     statas += "{} logs\nMethods:\n".format(nginx_collection.count_documents({}))
-    for meth in methods:
-        method_count = nginx_collection.count_documents({"methods": meth})
-        statas += '\tmethod {}: {}\n'.format(meth, method_count)
+    for m in methods:
+        method_count = nginx_collection.count_documents({"methods": m})
+        statas += "\tmethod {}: {}\n".format(m, method_count)
     statas += "{} status check".format(
         nginx_collection.count_documents({"path": "/status"}))
-    statas += '\nIPs:\n'
+    statas += "\nIPs:\n"
     top_ips = nginx_collection.aggregate([
-        {'$group': {'_id': '$ip', 'count': {'$sum': 1}}},
-        {'$sort': {'count': -1}}, {'$limit': 10}])
+        {"$group": {"_id": "$ip", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}}, {"$limit": 10}])
     for ip in top_ips:
-        statas += '\t{}: {}\n'.format(ip.get('_id'), ip.get('count'))
+        statas += "\t{}: {}\n".format(ip.get("_id"), ip.get("count"))
     print(statas, end='')
 
 
