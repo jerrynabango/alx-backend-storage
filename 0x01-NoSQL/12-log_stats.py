@@ -9,11 +9,11 @@ def log_stats() -> None:
     statas = ""
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    method = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     statas += "{} logs\nMethods:\n".format(nginx_collection.count_documents({}))
-    for method in methods:
-        method_count = nginx_collection.count_documents({"methods": method})
-        statas += '\tmethod {}: {}\n'.format(method, method_count)
+    for m in method:
+        method_count = nginx_collection.count_documents({"method": m})
+        statas += '\tmethod {}: {}\n'.format(m, method_count)
     statas += "{} status check".format(
             nginx_collection.count_documents({"path": "/status"}))
     print(statas)
