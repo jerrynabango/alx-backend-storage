@@ -6,17 +6,17 @@ from pymongo import MongoClient
 
 def log_stats() -> None:
     """provides some stats about Nginx logs stored in MongoDB"""
-    statas = ""
+    stats = ""
     client = MongoClient('mongodb://127.0.0.1:27017')
     nginx_collection = client.logs.nginx
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    statas += "{} logs\nMethods:\n".format(nginx_collection.count_documents({}))
+    stats += "{} logs\nMethods:\n".format(nginx_collection.count_documents({}))
     for method in methods:
         method_count = nginx_collection.count_documents({"methods": method})
-        statas += '\tmethod {}: {}\n'.format(method, method_count)
-    statas += "{} status check".format(
+        stats += '\tmethod {}: {}\n'.format(method, method_count)
+    stats += "{} status check".format(
             nginx_collection.count_documents({"path": "/status"}))
-    print(statas)
+    print(stats)
 
 
 if __name__ == '__main__':
