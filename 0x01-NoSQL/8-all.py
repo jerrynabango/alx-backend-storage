@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """List all documents in Python"""
 
+from typing import Iterator
+from pymongo import MongoClient
 
-def list_all(mongo_collection):
-    """List all documents in Python"""
-    if not mongo_collection:
+
+def list_all(mongo_collection: MongoClient) -> Iterator:
+    """function that lists all documents in a collection"""
+    if mongo_collection.count() == 0:
         return []
-    return list(mongo_collection.find())
+    return mongo_collection.find()
