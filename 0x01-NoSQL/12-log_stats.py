@@ -11,9 +11,9 @@ def log_stats() -> None:
     nginx_collection = client.logs.nginx
     methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
     stats += "{} logs\nMethods:\n".format(nginx_collection.count_documents({}))
-    for method in methods:
-        method_count = nginx_collection.count_documents({"methods": method})
-        stats += '\tmethod {}: {}\n'.format(method, method_count)
+    for m in methods:
+        method_count = nginx_collection.count_documents({"methods": m})
+        stats += '\tmethod {}: {}\n'.format(m, method_count)
     stats += "{} status check".format(
             nginx_collection.count_documents({"path": "/status"}))
     print(stats)
