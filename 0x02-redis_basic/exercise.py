@@ -73,13 +73,12 @@ def replay(fn: Callable) -> None:
     """
     display = ''
     fnName = fn.__qualname__
-    ikey = '{}:inputs'.format(fn.__qualname__)
-    okey = '{}:outputs'.format(fn.__qualname__)
+    ikey = f'{fn.__qualname__}:inputs'
+    okey = f'{fn.__qualname__}:outputs'
     cache = redis.Redis()
     if not cache.exists(ikey):
         return
-    display += '{} was called {} times:\n'.format(fnName, cache.llen(ikey))
+    display += f'{fnName} was called {cache.llen(ikey)} times:\n'
     for i, o in zip(cache.lrange(ikey, 0, -1), cache.lrange(okey, 0, -1)):
-        display += "{}(*{}) -> {}\n".format(
-            fnName, i.decode('utf-8'), o.decode('utf-8'))
+        display += f"{fnName}(*{i.decode('utf-8')}) -> {o.decode('utf-8')}\n"
     print(display, end="")
