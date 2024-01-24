@@ -1,0 +1,98 @@
+[
+    {
+        "label": "uuid",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "uuid",
+        "description": "uuid",
+        "detail": "uuid",
+        "documentation": {}
+    },
+    {
+        "label": "redis",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "redis",
+        "description": "redis",
+        "detail": "redis",
+        "documentation": {}
+    },
+    {
+        "label": "wraps",
+        "importPath": "functools",
+        "description": "functools",
+        "isExtraImport": true,
+        "detail": "functools",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Callable",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "Cache",
+        "kind": 6,
+        "importPath": "exercise",
+        "description": "exercise",
+        "peekOfCode": "class Cache(object):\n    \"\"\"\n    Implements caching using redis storage\n    \"\"\"\n    def __init__(self) -> None:\n        \"\"\"\n        Class instantiation method\n        \"\"\"\n        self._redis = redis.Redis()\n        self._redis.flushdb()",
+        "detail": "exercise",
+        "documentation": {}
+    },
+    {
+        "label": "call_history",
+        "kind": 2,
+        "importPath": "exercise",
+        "description": "exercise",
+        "peekOfCode": "def call_history(method: Callable) -> Callable:\n    \"\"\"\n    Create and return function that stores\n    the inputs and outputs each time a method is called\n    Args:\n        method (Calllable): function to be wrapped\n    Returns:\n        A wrapper function\n    \"\"\"\n    @wraps(method)",
+        "detail": "exercise",
+        "documentation": {}
+    },
+    {
+        "label": "count_calls",
+        "kind": 2,
+        "importPath": "exercise",
+        "description": "exercise",
+        "peekOfCode": "def count_calls(method: Callable) -> Callable:\n    \"\"\"\n    Create and return function that increments the count\n    for that key every time the method is called and returns\n    the value returned by the original method\n    Args:\n        method (Callable): function to be wrapped\n    Returns:\n        A wrapper function\n    \"\"\"",
+        "detail": "exercise",
+        "documentation": {}
+    },
+    {
+        "label": "replay",
+        "kind": 2,
+        "importPath": "exercise",
+        "description": "exercise",
+        "peekOfCode": "def replay(fn: Callable) -> None:\n    \"\"\"\n    Display the history of calls of a particular function.\n    Args:\n        fn (Callable): a function whose history to display\n    \"\"\"\n    display = ''\n    fnName = fn.__qualname__\n    ikey = '{}:inputs'.format(fn.__qualname__)\n    okey = '{}:outputs'.format(fn.__qualname__)",
+        "detail": "exercise",
+        "documentation": {}
+    },
+    {
+        "label": "Cache",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "Cache = __import__('exercise').Cache\ncache = Cache()\ncache.store(b\"first\")\nprint(cache.get(cache.store.__qualname__))\ncache.store(b\"second\")\ncache.store(b\"third\")\nprint(cache.get(cache.store.__qualname__))",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "cache",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "cache = Cache()\ncache.store(b\"first\")\nprint(cache.get(cache.store.__qualname__))\ncache.store(b\"second\")\ncache.store(b\"third\")\nprint(cache.get(cache.store.__qualname__))",
+        "detail": "main",
+        "documentation": {}
+    }
+]
