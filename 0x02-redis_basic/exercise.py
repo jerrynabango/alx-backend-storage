@@ -72,13 +72,13 @@ def replay(fn: Callable) -> None:
     Function that displays the history of calls of a particular function.
     """
     display = ''
-    fnName = fn.__qualname__
-    ikey = f'{fn.__qualname__}:inputs'
-    okey = f'{fn.__qualname__}:outputs'
+    fn_name = fn.__qualname__
+    ikey = f'{fn_name}:inputs'
+    okey = f'{fn_name}:outputs'
     cache = redis.Redis()
     if not cache.exists(ikey):
         return
-    display += f'{fnName} was called {cache.llen(ikey)} times:\n'
+    display += f'{fn_name} was called {cache.llen(ikey)} times:\n'
     for i, o in zip(cache.lrange(ikey, 0, -1), cache.lrange(okey, 0, -1)):
-        display += f"{fnName}(*{i.decode('utf-8')}) -> {o.decode('utf-8')}\n"
+        display += f"{fn_name}(*{i.decode('utf-8')}) -> {o.decode('utf-8')}\n"
     print(display, end="")
