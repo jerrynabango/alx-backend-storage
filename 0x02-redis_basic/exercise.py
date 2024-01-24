@@ -69,12 +69,15 @@ class Cache(object):
 
 def replay(fn: Callable) -> None:
     """Function that displays the history of calls of a particular function."""
-    display, fnName, ikey, okey = '', fn.__qualname__,
-    f'{fn.__qualname__}:inputs', f'{fn.__qualname__}:outputs'
+    display = ''
+    fnName = fn.__qualname__
+    ikey = '{}:inputs'.format(fn.__qualname__)
+    okey = '{}:outputs'.format(fn.__qualname__)
     cache = redis.Redis()
     if not cache.exists(ikey):
         return
-    display += f'{fnName} was called {cache.llen(ikey)} times:\n'
+    display += '{} was called {} times:\n'.format(fnName, cache.llen(ikey))
     for i, o in zip(cache.lrange(ikey, 0, -1), cache.lrange(okey, 0, -1)):
-        display += f"{fnName}(*{i.decode('utf-8')}) -> {o.decode('utf-8')}\n"
+        display += "{}(*{}) -> {}\n".format(
+            fnName, i.decode('utf-8'), o.decode('utf-8'))
     print(display, end="")
