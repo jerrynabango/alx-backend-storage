@@ -68,7 +68,9 @@ class Cache(object):
 
 
 def replay(fn: Callable) -> None:
-    """Function that displays the history of calls of a particular function."""
+    """
+    Function that displays the history of calls of a particular function.
+    """
     display = ''
     fnName = fn.__qualname__
     ikey = '{}:inputs'.format(fn.__qualname__)
