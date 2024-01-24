@@ -70,9 +70,10 @@ class Cache(object):
 
 def replay(fn: Callable) -> None:
     """
-    Function that displays the history of calls of a particular function.
+    Displays the history of calls of a particular function.
     """
-    display, fnName, ikey, okey = '', fn.__qualname__, f'{fn.__qualname__}:inputs', f'{fn.__qualname__}:outputs'
+    display, fnName, ikey, okey = '', fn.__qualname__,
+    f'{fn.__qualname__}:inputs', f'{fn.__qualname__}:outputs'
     cache = redis.Redis()
     if not cache.exists(ikey):
         return
