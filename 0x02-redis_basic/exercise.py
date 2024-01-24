@@ -36,6 +36,7 @@ def count_calls(method: Callable) -> Callable:
 
 
 class Cache(object):
+    """Provides some methods to interact with Redis instance."""
     def __init__(self) -> None:
         """Initialize Redis instance."""
         self._redis = redis.Redis()
@@ -71,14 +72,12 @@ def replay(fn: Callable) -> None:
     """
     Function that displays the history of calls of a particular function.
     """
-    display = ''
-    fn_name = fn.__qualname__
-    ikey = f'{fn_name}:inputs'
-    okey = f'{fn_name}:outputs'
+    display, fnName, ikey, okey = '', fn.__qualname__,
+    f'{fn.__qualname__}:inputs', f'{fn.__qualname__}:outputs'
     cache = redis.Redis()
     if not cache.exists(ikey):
         return
-    display += f'{fn_name} was called {cache.llen(ikey)} times:\n'
-    for i, o in zip(cache.lrange(ikey, 0, -1), cache.lrange(okey, 0, -1)):
-        display += f"{fn_name}(*{i.decode('utf-8')}) -> {o.decode('utf-8')}\n"
+    display += f'{fnName} was called {cache.llen(ikey)} times:\n'
+    for re, dis in zip(cache.lrange(ikey, 0, -1), cache.lrange(okey, 0, -1)):
+        display += f"{fnName}(*{re.decode('utf-8')}) ->{dis.decode('utf-8')}\n"
     print(display, end="")
