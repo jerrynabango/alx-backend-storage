@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Redis exercise module"""
 
-import uuid
 import redis
+import uuid
 from functools import wraps
 from typing import Union, Callable
 
